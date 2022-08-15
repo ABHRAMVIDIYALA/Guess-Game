@@ -1,0 +1,55 @@
+import random
+
+n_range = int(input('Enter range : '))
+chances = int(input('Enter number of chances : '))
+
+print('\n--------------Game Begins-----------------------\n')
+
+
+def get_factor(number):
+    factors = []
+    for j in range(1, number + 1):
+        if number % j == 0:
+            factors.append(j)
+    factors.remove(number)
+    factors.remove(1)
+    return factors
+
+
+def game():
+    secret_number = random.randint(0, n_range)
+
+    for i in range(0, chances):
+        guessed_number = int(input('Guess the number : '))
+
+        if guessed_number == secret_number:
+            print('Congratulations 🎉')
+            print('Score : ', ((chances-i)/chances)*100)
+            print('\n----👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏----\n')
+            break
+        elif i+1 == chances:
+            print('Game Over 🎮')
+            print('Secret Number : ', secret_number)
+            print('\n----❌🎮❌🎮❌🎮❌🎮❌🎮❌🎮❌🎮❌🎮❌🎮❌🎮❌🎮----\n')
+        elif guessed_number <= secret_number:
+            factor = get_factor(secret_number)
+            hints = ['Think higher...', str(random.choice(factor))+' is a multiple of secret number']
+
+            print('Hint : ', random.choice(hints))
+            print('Remaining chances : ', chances-(i+1))
+            print('\n------------------------------------------------\n')
+        elif guessed_number >= secret_number:
+            factor = get_factor(secret_number)
+            hints = ['Think lower...', str(random.choice(factor))+' is a multiple of secret number']
+
+            print('Hint : ', random.choice(hints))
+            print('Remaining chances : ', chances - (i + 1))
+            print('\n------------------------------------------------\n')
+
+
+if __name__ == '__main__':
+    try:
+        game()
+    except Exception:
+        print('wrong input 😢😢😢 ')
+        print('Play again...')
